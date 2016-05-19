@@ -65,7 +65,7 @@ include(ArtMake)
 include(BuildPlugins)
 
 # source
-add_subdirectory (arisana-source)
+add_subdirectory (arisana)
 
 # testing
 #add_subdirectory(test)
