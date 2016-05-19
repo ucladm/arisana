@@ -36,4 +36,15 @@ debugging situations.
   <class name="arisana::EventInfo"/>
   <class name="art::Wrapper<arisana::EventInfo>"/>
 
+  <class name="arisana::Channel"/>
+  <class name="art::Wrapper<arisana::Channel>"/>
+  <class name="std::vector<arisana::Channel>"/>
+  <class name="art::Wrapper<std::vector<arisana::Channel> >"/>
+
+  
+  <class name="arisana::ChannelWF"/>
+  <class name="art::Wrapper<arisana::ChannelWF>"/>
+  <class name="std::vector<arisana::ChannelWF>"/>
+  <class name="art::Wrapper<std::vector<arisana::ChannelWF> >"/>
+
 </lcgdict>

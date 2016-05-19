@@ -73,7 +73,7 @@ add_subdirectory (arisana)
 # ups - table and config files
 add_subdirectory(ups)
 
-#add_subdirectory(fcl)
+add_subdirectory(fcl)
 #add_subdirectory(aux)
 
 # packaging utility

@@ -5,7 +5,7 @@ art_make(
     ${ART_UTILITIES} 
     ${CETLIB}
   MODULE_LIBRARIES 
-    #arisana_Modules
+    arisana_Modules
     ${DARKSIDECORE_ARTSERVICES}
     ${DARKSIDECORE_ARTSERVICES_DBINTERFACE_SERVICE}
     ${ARTDAQ-CORE_DATA}

@@ -1,0 +1,52 @@
+process_name: reco
+
+source:
+{
+   module_type: RootInput
+   fileNames: nil
+}
+
+# we do not use art's native output
+
+services:
+{
+   TFileService: { fileName: "arisana.root" }
+   DBInterface:
+   {
+      #hostname: "ds50daq.lngs.infn.it"
+      hostname: "ds50dbgpvm01.fnal.gov"
+      database: "darkside50"
+      user: "dark"
+      password: "art"
+   }
+}
+
+physics:
+{
+   producers:
+   {
+      daq1720:
+      {
+         module_type: DS50Decompression
+         compressed_label: huffdiffV1720
+         instance_name: V1720
+         symtable_name: "v1720_huff_diff"
+      }
+
+      converter:
+      {
+         module_type: Converter
+         v1720_tag: "daq1720:V1720"
+         v1495_tag: "daq:V1495"
+         #skip_channels: [38,39]
+         max_nchannels: 40
+      }
+   }
+
+   p0:
+   [
+      daq1720, converter
+   ]
+
+   trigger_paths: [ p0 ]
+}

@@ -12,6 +12,8 @@
 
 
 #include "arisana/Products/EventInfo.hh"
+#include "arisana/Products/Channel.hh"
+#include "arisana/Products/ChannelWF.hh"
 
 #include <vector>
 #include <utility>
@@ -30,3 +32,12 @@ template class std::vector<std::vector<double> >;
 template class art::Wrapper<std::vector<std::vector<double> > >;
 
 template class art::Wrapper<arisana::EventInfo>;
+
+template class art::Wrapper<arisana::Channel>;
+template class std::vector<arisana::Channel>;
+template class art::Wrapper<std::vector<arisana::Channel> >;
+
+
+template class art::Wrapper<arisana::ChannelWF>;
+template class std::vector<arisana::ChannelWF>;
+template class art::Wrapper<std::vector<arisana::ChannelWF> >;
