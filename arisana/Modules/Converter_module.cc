@@ -7,6 +7,7 @@
 // from cetpkgsupport v1_08_06.
 ////////////////////////////////////////////////////////////////////////
 
+// art includes
 #include "art/Framework/Core/EDProducer.h"
 #include "art/Framework/Core/ModuleMacros.h"
 #include "art/Framework/Principal/Event.h"
@@ -17,24 +18,24 @@
 #include "fhiclcpp/ParameterSet.h"
 #include "messagefacility/MessageLogger/MessageLogger.h"
 
+// artdaq includes
 #include "artdaq-core/Data/Fragment.hh"
 #include "artdaq-core/Data/Fragments.hh"
 #include "artdaq-core/Data/detail/RawFragmentHeader.hh"
 
-
-// TO BE CHANGED WITH NEW DAQ
+// darksidecore includes
 #include "darksidecore/Data/V172xFragment.hh"
 #include "darksidecore/Data/V1495Fragment.hh"
 #include "darksidecore/Data/Config.hh"
 #include "darksidecore/ArtServices/DBInterface.hh"
 
-
+// arisana includes
 #include "arisana/Products/EventInfo.hh"
 #include "arisana/Products/Channel.hh"
 #include "arisana/Products/ChannelWF.hh"
-
 #include "arisana/Modules/converter_helper.hh"
 
+// std includes
 #include <memory>
 #include <vector>
 #include <iostream>
