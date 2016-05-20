@@ -1,5 +1,5 @@
-#ifndef arisana_Modules_converter_algs_hh
-#define arisana_Modules_converter_algs_hh
+#ifndef arisana_Modules_ConverterHelper_hh
+#define arisana_Modules_ConverterHelper_hh
 
 #include "art/Framework/Principal/Event.h"
 #include "art/Framework/Principal/Handle.h"

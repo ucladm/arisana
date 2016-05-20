@@ -33,7 +33,7 @@
 #include "arisana/Products/EventInfo.hh"
 #include "arisana/Products/Channel.hh"
 #include "arisana/Products/ChannelWF.hh"
-#include "arisana/Modules/converter_helper.hh"
+#include "arisana/Modules/ConverterHelper.hh"
 
 // std includes
 #include <memory>

@@ -47,9 +47,9 @@ debugging situations.
   <class name="std::vector<arisana::ChannelWF>"/>
   <class name="art::Wrapper<std::vector<arisana::ChannelWF> >"/>
 
-  <class name="arisana::Baseline"/>
-  <class name="art::Wrapper<arisana::Baseline>"/>
-  <class name="std::vector<arisana::Baseline>"/>
-  <class name="art::Wrapper<std::vector<arisana::Baseline> >"/>
+  <class name="arisana::BaselineData"/>
+  <class name="art::Wrapper<arisana::BaselineData>"/>
+  <class name="std::vector<arisana::BaselineData>"/>
+  <class name="art::Wrapper<std::vector<arisana::BaselineData> >"/>
 
 </lcgdict>

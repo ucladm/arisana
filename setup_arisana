@@ -1,0 +1,13 @@
+
+source /ds50/app/ds50/setup_ds50
+
+mkdir -p ${DS50app}/user/${USER}/work/build/arisana
+cd ${DS50app}/user/${USER}/work/build/arisana
+
+# We set up the 'profile' build, which is optimized but still has debug symbols.
+source ${DS50app}/user/${USER}/work/arisana/ups/setup_for_development -p 
+
+MY_FILE_PATH=${CETPKG_SOURCE}
+
+export FHICL_FILE_PATH=.
+export FHICL_FILE_PATH=`dropit -sfe -p "$FHICL_FILE_PATH" "$MY_FILE_PATH/fcl" "."`

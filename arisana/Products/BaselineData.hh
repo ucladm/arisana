@@ -1,11 +1,11 @@
-#ifndef arisana_Products_Baseline_hh
-#define arisana_Products_Baseline_hh
+#ifndef arisana_Products_BaselineData_hh
+#define arisana_Products_BaselineData_hh
 
 namespace arisana
 {
-  struct Baseline
+  struct BaselineData
   {
-    Baseline():
+    BaselineData():
       mean(-1),
       variance(-1),
       valid(0)

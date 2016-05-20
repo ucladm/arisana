@@ -1,4 +1,4 @@
-#include "arisana/Modules/converter_helper.hh"
+#include "arisana/Modules/ConverterHelper.hh"
 #include "darksidecore/Data/Config.hh"
 #include "art/Utilities/Exception.h"
 #include "artdaq-core/Data/Fragment.hh"

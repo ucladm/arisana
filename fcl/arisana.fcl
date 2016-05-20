@@ -31,7 +31,7 @@ physics:
          compressed_label: huffdiffV1720
          instance_name: V1720
          symtable_name: "v1720_huff_diff"
-      }
+      }#daq1720
 
       converter:
       {
@@ -40,15 +40,28 @@ physics:
          v1495_tag: "daq:V1495"
          #skip_channels: [38,39]
          max_nchannels: 40
-      }
+      }#converter
 
       baseline:
       {
          module_type: BaselineFinder
          chan_tag: "raw"
          raw_wf_tag: "converter"
-      }
-   }
+         params:
+         {
+            # FIXED: fixed baseline
+            # ZERO: baseline = 0, i.e. baseline-subtracted WF = input WF
+            mode: "FIXED"
+            fixedBaselineParams:
+            {
+               start_time: -999 #[us] will be truncated to start of waveform
+               end_time: 0
+               max_sigma: 10 #arbitrary number for now
+            }
+         }#params
+      }#baseline
+      
+   }#producers
 
    p0:
    [

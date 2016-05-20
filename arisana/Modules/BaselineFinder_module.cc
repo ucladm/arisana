@@ -20,7 +20,8 @@
 #include "arisana/Products/EventInfo.hh"
 #include "arisana/Products/Channel.hh"
 #include "arisana/Products/ChannelWF.hh"
-#include "arisana/Products/Baseline.hh"
+#include "arisana/Products/BaselineData.hh"
+#include "arisana/Modules/BaselineHelper.hh"
 
 #include <memory>
 #include <iostream>
@@ -52,15 +53,17 @@ private:
   art::InputTag _chan_tag;
   art::InputTag _raw_wf_tag;
 
-
+  BaselineHelper _helper;
+  
 };
 
 
 arisana::BaselineFinder::BaselineFinder(fhicl::ParameterSet const & p)
   : _chan_tag(p.get<string>("chan_tag"))
   , _raw_wf_tag(p.get<string>("raw_wf_tag"))
+  , _helper(p.get<fhicl::ParameterSet>("params"))
 {
-  produces<vector<arisana::Baseline> >();
+  produces<vector<arisana::BaselineData> >();
   produces<vector<arisana::ChannelWF> >();
 }
 
@@ -78,10 +81,19 @@ void arisana::BaselineFinder::produce(art::Event & e)
   
 
   // Make our products, which begin empty
-  unique_ptr<vector<arisana::Baseline> > baselineData(new vector<arisana::Baseline>);
+  unique_ptr<vector<arisana::BaselineData> > baselineData(new vector<arisana::BaselineData>);
   unique_ptr<vector<arisana::ChannelWF> > bsWFs(new vector<arisana::ChannelWF>);
 
-  // Call the actual baseline finder algorithm
+  // Call the actual baseline finder algorithm for each channel
+  for (size_t i = 0; i<chans.size(); ++i) {
+    arisana::Channel const& ch = chans[i];
+    arisana::ChannelWF const& rawWF = rawWFs[i];
+
+    arisana::ChannelWF bsWF;
+    arisana::BaselineData baselineData;
+
+    _helper.evalBaselineSubtractedWF(ch, rawWF, bsWF, baselineData);
+  }
   
 
   // Put the completed data products into the art::Event
