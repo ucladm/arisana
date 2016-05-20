@@ -58,5 +58,8 @@ debugging situations.
   <class name="art::Wrapper<std::vector<arisana::ROI> >"/>
 
 
+  <class name="arisana::EventData"/>
+  <class name="art::Wrapper<arisana::EventData>"/>
+
 
 </lcgdict>

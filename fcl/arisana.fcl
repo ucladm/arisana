@@ -79,13 +79,30 @@ physics:
             [-5, 0]
          ]
       }#roi
+
+
+      master:
+      {
+         module_type: MasterBuilder
+         eventInfo_tag: "converter"
+         chan_tag: "converter"
+         baseline_tag: "baseline"
+         roi_tag: "roi"
+      }
       
    }#producers
+
+   analyzers
+   {
+      arisana: { module_type: TreeWriter   eventData_tag: "master" }
+   }
 
    p0:
    [
       daq1720, converter
    ]
-
+   a0: [ arisana ]
+   
    trigger_paths: [ p0 ]
+   end_paths: [ a0 ]
 }
