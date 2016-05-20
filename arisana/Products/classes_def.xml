@@ -52,4 +52,11 @@ debugging situations.
   <class name="std::vector<arisana::BaselineData>"/>
   <class name="art::Wrapper<std::vector<arisana::BaselineData> >"/>
 
+  <class name="arisana::ROI"/>
+  <class name="art::Wrapper<arisana::ROI>"/>
+  <class name="std::vector<arisana::ROI>"/>
+  <class name="art::Wrapper<std::vector<arisana::ROI> >"/>
+
+
+
 </lcgdict>

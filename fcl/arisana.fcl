@@ -45,8 +45,8 @@ physics:
       baseline:
       {
          module_type: BaselineFinder
-         chan_tag: "raw"
-         raw_wf_tag: "converter"
+         chan_tag: "converter"
+         rawWF_tag: "converter"
          params:
          {
             # FIXED: fixed baseline
@@ -60,6 +60,25 @@ physics:
             }
          }#params
       }#baseline
+
+      integrator:
+      {
+         module_type: Integrator
+         chan_tag: "converter"
+         bsWF_tag: "baseline"
+      }#integrator
+
+      roi:
+      {
+         module_type: ROIEval
+         chan_tag: "converter"
+         integralWF_tag: "integrator"
+         roi_times:  
+         [ #[start, end] in us
+            [0, 7],
+            [-5, 0]
+         ]
+      }#roi
       
    }#producers
 

@@ -51,7 +51,7 @@ public:
 private:
 
   art::InputTag _chan_tag;
-  art::InputTag _raw_wf_tag;
+  art::InputTag _rawWF_tag;
 
   BaselineHelper _helper;
   
@@ -60,7 +60,7 @@ private:
 
 arisana::BaselineFinder::BaselineFinder(fhicl::ParameterSet const & p)
   : _chan_tag(p.get<string>("chan_tag"))
-  , _raw_wf_tag(p.get<string>("raw_wf_tag"))
+  , _rawWF_tag(p.get<string>("rawWF_tag"))
   , _helper(p.get<fhicl::ParameterSet>("params"))
 {
   produces<vector<arisana::BaselineData> >();
@@ -76,7 +76,7 @@ void arisana::BaselineFinder::produce(art::Event & e)
 
   // Retrieve the raw waveforms vec.
   art::Handle<vector<arisana::ChannelWF> > rawWFsHandle;
-  e.getByLabel(_raw_wf_tag, rawWFsHandle);
+  e.getByLabel(_rawWF_tag, rawWFsHandle);
   vector<arisana::ChannelWF> const& rawWFs(*rawWFsHandle);
   
 

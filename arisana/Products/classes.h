@@ -15,6 +15,7 @@
 #include "arisana/Products/Channel.hh"
 #include "arisana/Products/ChannelWF.hh"
 #include "arisana/Products/BaselineData.hh"
+#include "arisana/Products/ROI.hh"
 
 #include <vector>
 #include <utility>
@@ -45,3 +46,9 @@ template class art::Wrapper<std::vector<arisana::ChannelWF> >;
 template class art::Wrapper<arisana::BaselineData>;
 template class std::vector<arisana::BaselineData>;
 template class art::Wrapper<std::vector<arisana::BaselineData> >;
+
+
+template class art::Wrapper<arisana::ROI>;
+template class std::vector<arisana::ROI>;
+template class art::Wrapper<std::vector<arisana::ROI> >;
+
