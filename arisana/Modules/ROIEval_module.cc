@@ -103,7 +103,7 @@ void arisana::ROIEval::produce(art::Event & e)
       const int roi_start_samp = chan.TimeToSample(roi_start, true);
       const int roi_end_samp = chan.TimeToSample(roi_end, true);
 
-      double ch_roi = integralWF.waveform[roi_end_samp] - integralWF.waveform[roi_start_samp];
+      double ch_roi = (integralWF.waveform[roi_end_samp] - integralWF.waveform[roi_start_samp]) / -chan.pmt.spe_mean;
       roi.ch_roi[ch] = ch_roi;
       roi.roi += ch_roi;
     }

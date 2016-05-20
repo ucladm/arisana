@@ -80,7 +80,20 @@ physics:
          ]
       }#roi
 
+      sumch:
+      {
+         module_type: SumChannel
+         chan_tag: "converter"
+         bsWF_tag: "baseline"
+      }
 
+      sumchIntegrator:
+      {
+         moduel_type: Integrator
+         chan_tag: "sumch"
+         bsWF_tag: "sumch"
+      }
+      
       master:
       {
          module_type: MasterBuilder
@@ -99,7 +112,10 @@ physics:
 
    p0:
    [
-      daq1720, converter
+      daq1720, converter,
+      baseline, integrator, roi,
+      sumch, sumchIntegrator,
+      master
    ]
    a0: [ arisana ]
    
