@@ -81,8 +81,10 @@ void arisana::BaselineFinder::produce(art::Event & e)
   unique_ptr<vector<arisana::Baseline> > baselineData(new vector<arisana::Baseline>);
   unique_ptr<vector<arisana::ChannelWF> > bsWFs(new vector<arisana::ChannelWF>);
 
+  // Call the actual baseline finder algorithm
   
-  
+
+  // Put the completed data products into the art::Event
   e.put(std::move(baselineData));
   e.put(std::move(bsWFs));
   

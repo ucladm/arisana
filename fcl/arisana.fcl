@@ -41,6 +41,13 @@ physics:
          #skip_channels: [38,39]
          max_nchannels: 40
       }
+
+      baseline:
+      {
+         module_type: BaselineFinder
+         chan_tag: "raw"
+         raw_wf_tag: "converter"
+      }
    }
 
    p0:
