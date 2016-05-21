@@ -84,10 +84,10 @@ void arisana::PulseFinderHelper::evalParams(vector<arisana::Channel> const& chan
   const int end_samp = sumCH.TimeToSample(end_time);
 
   
-  double peak_samp = 0;
-  double peak_amp = 0;
-  for (int samp = start_samp; samp<end_samp; ++samp) {
-    if (sumWF.waveform[samp] > peak_samp) {
+  double peak_samp = start_samp;
+  double peak_amp = sumWF.waveform[start_samp];
+  for (int samp = start_samp+1; samp<end_samp; ++samp) {
+    if (sumWF.waveform[samp] > peak_amp) {
       peak_samp = samp;
       peak_amp = sumWF.waveform[samp];
     }
@@ -105,10 +105,10 @@ void arisana::PulseFinderHelper::evalParams(vector<arisana::Channel> const& chan
 
 
     // Find peak time and amplitude
-    double ch_peak_samp = 0;
-    double ch_peak_amp = 0;
-    for (int samp = start_samp; samp<end_samp; ++samp) {
-      if (bsWF.waveform[samp] < peak_samp) {
+    double ch_peak_samp = start_samp;
+    double ch_peak_amp = bsWF.waveform[start_samp];
+    for (int samp = start_samp+1; samp<end_samp; ++samp) {
+      if (bsWF.waveform[samp] < ch_peak_amp) {
         ch_peak_samp = samp;
         ch_peak_amp = bsWF.waveform[samp];
       }

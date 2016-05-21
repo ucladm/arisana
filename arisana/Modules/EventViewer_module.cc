@@ -164,8 +164,9 @@ void arisana::EventViewer::DrawProcessed(TMultiGraph* mg,
     const int peak_index = (isSUMCH ? pulse.peak_index : pulse.ch_peak_index[channel_id]);
     const double peak_amplitude = (isSUMCH ? pulse.peak_amplitude : pulse.ch_peak_amplitude[channel_id]);
     
+    // signal in physical channels points down. signal in sum ch points up.
     double y1 = baseline_mean;
-    double y2 = peak_amplitude - baseline_mean;
+    double y2 = (isSUMCH ? peak_amplitude - baseline_mean : peak_amplitude + baseline_mean);
     TBox* pbox = new TBox( x[pulse.start_index], std::min(y1,y2),
                            x[pulse.end_index], std::max(y1,y2));
     pbox->SetBit(TObject::kCanDelete,true);
