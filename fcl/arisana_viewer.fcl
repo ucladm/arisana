@@ -29,6 +29,7 @@ physics:
       roi: @local::roi_d
       sumch: @local::sumch_d
       sumchIntegrator: @local::sumchIntegrator_d
+      pulses: @local::pulses_d
       master: @local::master_d
       
    }#producers

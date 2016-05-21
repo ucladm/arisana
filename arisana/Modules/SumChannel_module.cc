@@ -93,7 +93,7 @@ void arisana::SumChannel::produce(art::Event & e)
   sumWF.waveform.resize(nsamps);
   for (size_t ch=0; ch<chans.size(); ++ch) {
     for (int i=0; i<nsamps; ++i)
-      sumWF.waveform[i] += bsWFs[ch].waveform[i] / chans[ch].pmt.spe_mean;
+      sumWF.waveform[i] += bsWFs[ch].waveform[i] / -chans[ch].pmt.spe_mean;
   }
   sumWFs->push_back(std::move(sumWF));
 

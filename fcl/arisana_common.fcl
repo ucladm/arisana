@@ -80,6 +80,25 @@ sumchIntegrator_d:
    bsWF_tag: "sumch"
 }
 
+pulses_d:
+{
+   module_type: PulseFinder
+   sumch_tag: "sumch"
+   sumWF_tag: "sumch"
+   chan_tag: "converter"
+   bsWF_tag: "baseline"
+   integralWF_tag: "integrator"
+   params:
+   {
+      mode: "DISCRIMINATOR"
+
+      discriminatorParams:
+      {
+         threshold: 100
+      }
+   }#params
+}#pulses
+
 master_d:
 {
    module_type: MasterBuilder

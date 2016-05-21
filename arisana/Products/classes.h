@@ -16,6 +16,7 @@
 #include "arisana/Products/ChannelWF.hh"
 #include "arisana/Products/BaselineData.hh"
 #include "arisana/Products/ROI.hh"
+#include "arisana/Products/Pulse.hh"
 #include "arisana/Products/EventData.hh"
 
 #include <vector>
@@ -23,8 +24,6 @@
 
 // art stuff
 #include "art/Persistency/Common/Wrapper.h"
-#include "art/Persistency/Common/Assns.h"
-#include "art/Persistency/Common/Ptr.h"
 
 template class art::Wrapper<int>;
 template class art::Wrapper<float>;
@@ -58,5 +57,8 @@ template class art::Wrapper<arisana::ROI>;
 template class std::vector<arisana::ROI>;
 template class art::Wrapper<std::vector<arisana::ROI> >;
 
+template class art::Wrapper<arisana::Pulse>;
+template class std::vector<arisana::Pulse>;
+template class art::Wrapper<std::vector<arisana::Pulse> >;
 
 template class art::Wrapper<arisana::EventData>;

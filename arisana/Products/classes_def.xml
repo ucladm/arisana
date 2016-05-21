@@ -62,6 +62,10 @@ debugging situations.
   <class name="std::vector<arisana::ROI>"/>
   <class name="art::Wrapper<std::vector<arisana::ROI> >"/>
 
+  <class name="arisana::Pulse"/>
+  <class name="art::Wrapper<arisana::Pulse>"/>
+  <class name="std::vector<arisana::Pulse>"/>
+  <class name="art::Wrapper<std::vector<arisana::Pulse> >"/>
 
   <class name="arisana::EventData"/>
   <class name="art::Wrapper<arisana::EventData>"/>
