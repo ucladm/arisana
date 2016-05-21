@@ -87,7 +87,7 @@ void arisana::Converter::produce(art::Event & e)
 {
   // Get handle to the V1720 block
   auto v1720 = e.getValidHandle<artdaq::Fragments>(_v1720_tag);
-  auto v1495 = e.getValidHandle<artdaq::Fragments>(_v1495_tag);
+  //auto v1495 = e.getValidHandle<artdaq::Fragments>(_v1495_tag);
 
   // Make our products, which begin empty.
   std::unique_ptr<arisana::EventInfo> eventInfo(new arisana::EventInfo);
@@ -104,8 +104,8 @@ void arisana::Converter::produce(art::Event & e)
   _helper.convertFragments( *v1720, *channels, *rawWFs );
   
   // Fill EventInfo
-  artdaq::Fragment const& frag = v1495->front();
-  ds50::V1495Fragment overlay(frag);
+  //artdaq::Fragment const& frag = v1495->front();
+  //ds50::V1495Fragment overlay(frag);
   eventInfo->run_id    = e.run();
   eventInfo->subrun_id = e.subRun();
   eventInfo->event_id  = e.event();
