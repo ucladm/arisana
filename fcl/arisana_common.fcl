@@ -107,6 +107,7 @@ master_d:
    baseline_tag: "baseline"
    roi_tag: "roi"
    sumch_tag: "sumch"
+   pulse_tag: "pulses"
 }
 
 

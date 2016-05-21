@@ -92,6 +92,8 @@ void arisana::TreeWriter::analyze(art::Event const & e)
     _eventData->channels        = eData.channels;
     _eventData->baselines       = eData.baselines;
     _eventData->rois            = eData.rois;
+    _eventData->pulses          = eData.pulses;
+    _eventData->npulses         = eData.npulses;
   }
   _tree->Fill();
 }

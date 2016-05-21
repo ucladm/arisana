@@ -81,7 +81,7 @@ private:
   TCanvas sum_can;
 
   void DrawProcessed(TMultiGraph* mg,
-                     arisana::Channel const& chan,
+                     arisana::EventData const& eventData,
                      arisana::ChannelWF const& rawWF,
                      arisana::ChannelWF const& bsWF);
   //arisana::ChannelWF const& integralWF);
@@ -111,11 +111,21 @@ arisana::EventViewer::EventViewer(fhicl::ParameterSet const & p)
 
 
 void arisana::EventViewer::DrawProcessed(TMultiGraph* mg,
-                                         arisana::Channel const& chan,
+                                         arisana::EventData const& eventData,
                                          arisana::ChannelWF const& rawWF,
                                          arisana::ChannelWF const& bsWF)
                                          //arisana::ChannelWF const& integralWF)
 {
+  const int channel_id = rawWF.channel_id;
+  const bool isSUMCH = (channel_id == arisana::Channel::SUMCH_ID);
+  arisana::Channel const& chan = (isSUMCH ?
+                                  eventData.sumch.front() :
+                                  eventData.channels[channel_id]);
+  const double baseline_mean = (isSUMCH ? 0 : eventData.baselines[channel_id].mean);
+                                       
+                                       
+  
+  
   // generate the x axis
   const int nsamps = rawWF.waveform.size();
   std::vector<double> x(nsamps);
@@ -145,7 +155,32 @@ void arisana::EventViewer::DrawProcessed(TMultiGraph* mg,
   mg->GetYaxis()->SetTitle("amplitude [counts]");
   mg->GetXaxis()->SetTitleSize(0.04);
   mg->GetYaxis()->SetTitleSize(0.04);
+
+  // Draw pulse boxes
+  vector<arisana::Pulse> const& pulses = eventData.pulses;
+  for (size_t i=0; i<pulses.size(); ++i) {
+    arisana::Pulse const& pulse = pulses[i];
+
+    const int peak_index = (isSUMCH ? pulse.peak_index : pulse.ch_peak_index[channel_id]);
+    const double peak_amplitude = (isSUMCH ? pulse.peak_amplitude : pulse.ch_peak_amplitude[channel_id]);
+    
+    double y1 = baseline_mean;
+    double y2 = peak_amplitude - baseline_mean;
+    TBox* pbox = new TBox( x[pulse.start_index], std::min(y1,y2),
+                           x[pulse.end_index], std::max(y1,y2));
+    pbox->SetBit(TObject::kCanDelete,true);
+    pbox->SetLineColor(kGreen);
+    pbox->SetFillStyle(0);
+    pbox->Draw();
+    TLine* pline = new TLine( x[peak_index], std::min(y1,y2),
+                              x[peak_index], std::max(y1,y2));
+    pline->SetBit(TObject::kCanDelete,true);
+    pline->SetLineColor(kMagenta);
+    pline->Draw();
+
+  }//end loop over pulses
 }
+
 
 
 
@@ -212,7 +247,7 @@ void arisana::EventViewer::analyze(art::Event const & e)
         ch_pad_map.insert( std::pair<int, int>(ch, padn) );
 
         // Format and draw everything
-        DrawProcessed(mg, eventData.channels[ch], rawWFs[ch], bsWFs[ch]); //, integralWFs[ch]);
+        DrawProcessed(mg, eventData, rawWFs[ch], bsWFs[ch]); //, integralWFs[ch]);
         
         can.Update();
       } // loop over channels
@@ -260,7 +295,7 @@ void arisana::EventViewer::analyze(art::Event const & e)
       gStyle->SetTitleSize(1);
 
       // Format and draw everything
-      DrawProcessed(mg, eventData.sumch[0], rawSUMs[0], rawSUMs[0]); //, integralWFs[ch]);
+      DrawProcessed(mg, eventData, rawSUMs[0], rawSUMs[0]); //, integralWFs[ch]);
         
       sum_can.Update();
     }

@@ -17,6 +17,7 @@
 #include "Channel.hh"
 #include "BaselineData.hh"
 #include "ROI.hh"
+#include "Pulse.hh"
 
 #include <string>
 #include <vector>
@@ -32,9 +33,9 @@ namespace arisana
       channels(),
       baselines(),
       rois(),
-      sumch()
-      //pulses(),
-      //npulses(0)
+      sumch(),
+      pulses(),
+      npulses(0)
     {}
 
     std::string arisana_version;
@@ -44,8 +45,8 @@ namespace arisana
     std::vector<arisana::BaselineData> baselines;
     std::vector<arisana::ROI> rois;
     std::vector<arisana::Channel> sumch;
-    //std::vector<arisana::Pulse> pulses;
-    //int npulses;
+    std::vector<arisana::Pulse> pulses;
+    int npulses;
 
     void clear();
   };
@@ -61,8 +62,8 @@ inline void arisana::EventData::clear()
   baselines.clear();
   rois.clear();
   sumch.clear();
-  //pulses.clear();
-  //npulses = 0;
+  pulses.clear();
+  npulses = 0;
 }
 
 

@@ -109,9 +109,9 @@ void arisana::PulseFinder::produce(art::Event & e)
   vector<arisana::Channel> const& chans(*chansHandle);
 
   // Retrieve the physical channel baseline-subtracted waveforms
-  //art::Handle<vector<arisana::ChannelWF> > bsWFsHandle;
-  //e.getByLabel(_bsWFs_tag, bsWFsHandle);
-  //vector<arisana::ChannelWF> const& bsWFs(*bsWFsHandle);
+  art::Handle<vector<arisana::ChannelWF> > bsWFsHandle;
+  e.getByLabel(_bsWFs_tag, bsWFsHandle);
+  vector<arisana::ChannelWF> const& bsWFs(*bsWFsHandle);
 
   // Retrieve the physical channel integral waveforms
   art::Handle<vector<arisana::ChannelWF> > integralWFsHandle;
@@ -121,7 +121,7 @@ void arisana::PulseFinder::produce(art::Event & e)
   
   // Evaluate parameters for each pulse.
   for (size_t i=0; i<pulses->size(); ++i) {
-    _helper.evalParams(chans, integralWFs, pulses->at(i));
+    _helper.evalParams(chans, bsWFs, integralWFs, sumCH, sumWF, pulses->at(i));
   }
 
   //---------------------------------------------------

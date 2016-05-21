@@ -63,6 +63,7 @@ physics:
       converter,
       baseline, integrator, roi,
       sumch, sumchIntegrator,
+      pulses,
       master, viewerInputs
    ]
    a0: [ viewer ]

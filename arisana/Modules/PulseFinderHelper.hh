@@ -22,8 +22,10 @@ namespace arisana
                     std::vector<arisana::Pulse> & pulses);
 
     void evalParams(std::vector<arisana::Channel> const& chans,
-                    //std::vector<arisana::ChannelWF> const& bsWFs,
+                    std::vector<arisana::ChannelWF> const& bsWFs,
                     std::vector<arisana::ChannelWF> const& integralWFs,
+                    arisana::Channel const& sumCH,
+                    arisana::ChannelWF const& sumWF,
                     arisana::Pulse & pulse);
 
   private:

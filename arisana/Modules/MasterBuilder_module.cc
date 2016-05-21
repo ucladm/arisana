@@ -19,10 +19,9 @@
 
 #include "arisana/Products/EventInfo.hh"
 #include "arisana/Products/Channel.hh"
-//#include "arisana/Products/ChannelWF.hh"
 #include "arisana/Products/BaselineData.hh"
 #include "arisana/Products/ROI.hh"
-//#include "arisana/Products/Pulse.hh"
+#include "arisana/Products/Pulse.hh"
 #include "arisana/Products/EventData.hh"
 
 #include <memory>
@@ -58,6 +57,7 @@ private:
   art::InputTag _baseline_tag;
   art::InputTag _roi_tag;
   art::InputTag _sumch_tag;
+  art::InputTag _pulse_tag;
   
   int _counter;
 };
@@ -69,6 +69,7 @@ arisana::MasterBuilder::MasterBuilder(fhicl::ParameterSet const & p)
   , _baseline_tag(p.get<std::string>("baseline_tag"))
   , _roi_tag(p.get<std::string>("roi_tag"))
   , _sumch_tag(p.get<std::string>("sumch_tag"))
+  , _pulse_tag(p.get<std::string>("pulse_tag"))
   , _counter(-1)
 {
   produces<arisana::EventData>();
@@ -110,6 +111,11 @@ void arisana::MasterBuilder::produce(art::Event & e)
   e.getByLabel(_sumch_tag, sumchHandle);
   vector<arisana::Channel> const& sumch(*sumchHandle);
 
+  // Get the pulses
+  art::Handle<vector<arisana::Pulse> > pulsesHandle;
+  e.getByLabel(_pulse_tag, pulsesHandle);
+  vector<arisana::Pulse> const& pulses(*pulsesHandle);
+
 
   eventData->info = std::move(eventInfo);
   eventData->nchannels = channels.size();
@@ -117,6 +123,9 @@ void arisana::MasterBuilder::produce(art::Event & e)
   eventData->baselines = std::move(baselines);
   eventData->rois = std::move(rois);
   eventData->sumch = std::move(sumch);
+  eventData->npulses = pulses.size();
+  eventData->pulses = std::move(pulses);
+
   
   
   // put the completed data product in the art::Event
