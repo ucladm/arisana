@@ -1,0 +1,69 @@
+BEGIN_PROLOG
+
+mf_default: 
+{
+  destinations: 
+  {
+    LogToConsole: 
+    { 
+      type: cout 
+      threshold: "INFO"
+      categories:
+      {
+        ArtReport: { reportEvery: 1 limit: 100 }  # ArtReport generates INFO messages
+                                                 # telling when events are started processing
+        DataState: { limit: -1 } #  0: suppress invalid module input state warnings 
+                                 # -1: print warnings
+        default: { limit: 10 }
+      }
+    }
+    LogToFile: 
+    { 
+      type: file 
+      filename: "logfile.log"
+      threshold: "INFO"
+      categories:
+      {
+        ArtReport: { limit: 0 } # Turn off ArtReport's messages
+        DataState: { limit: -1 } # Print all warning messages of this type
+        default: { limit: 10 }
+      }
+    }
+  }
+}
+
+mf_silent:
+{
+  destinations:
+  {
+    LogToConsole:
+    {
+      type: cout
+      threshold: "ERROR"
+    }
+    LogToFile: 
+    { 
+      type: file 
+      filename: "logfile.log"
+      threshold: "INFO"
+      categories:
+      {
+        ArtReport: { limit: 0 } # Turn off ArtReport's messages
+        DataState: { limit: -1 } # Print all warning messages of this type
+        default: { limit: 10 }
+      }
+    }
+  }
+}
+    
+scheduler_default:
+{
+  defaultExceptions: false
+  #FailModule: ["ProductRetrieval"]
+  FailPath: ["SaturationCorrector", "ProductRetrieval","DataState"]
+  SkipEvent: ["ProductNotFound","FatalRootError","SLADReader"]
+  Rethrow: ["QuitViewer","Configuration"]
+  #IgnoreCompletely: ["FatalRootError"]
+}
+
+END_PROLOG

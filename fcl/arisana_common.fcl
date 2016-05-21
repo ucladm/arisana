@@ -1,0 +1,96 @@
+BEGIN_PROLOG
+
+DBInterface_d:
+{
+   #hostname: "ds50daq.lngs.infn.it"
+   hostname: "ds50dbgpvm01.fnal.gov"
+   database: "darkside50"
+   user: "dark"
+   password: "art"
+
+}
+
+daq1720_d:
+{
+   module_type: DS50Decompression
+   compressed_label: huffdiffV1720
+   instance_name: V1720
+   symtable_name: "v1720_huff_diff"
+}#daq1720
+
+converter_d:
+{
+   module_type: Converter
+   #v1720_tag: "daq1720:V1720"
+   #v1495_tag: "daq:V1495"
+   v1720_tag: "daq:V1720"
+   v1495_tag: "daq:V1495"
+   max_nchannels: 8
+}#converter
+
+baseline_d:
+{
+   module_type: BaselineFinder
+   chan_tag: "converter"
+   rawWF_tag: "converter"
+   params:
+   {
+      # FIXED: fixed baseline
+      # ZERO: baseline = 0, i.e. baseline-subtracted WF = input WF
+      mode: "FIXED"
+      fixedBaselineParams:
+      {
+         start_time: -999 #[us] will be truncated to start of waveform
+         end_time: -10
+         max_sigma: 10 #arbitrary number for now
+      }
+   }#params
+}#baseline
+
+integrator_d:
+{
+   module_type: Integrator
+   chan_tag: "converter"
+   bsWF_tag: "baseline"
+}#integrator
+
+roi_d:
+{
+   module_type: ROIEval
+   chan_tag: "converter"
+   integralWF_tag: "integrator"
+   roi_times:  
+   [ #[start, end] in us
+      [0, 7],
+      [-5, 0]
+   ]
+}#roi
+
+sumch_d:
+{
+   module_type: SumChannel
+   chan_tag: "converter"
+   bsWF_tag: "baseline"
+}
+
+sumchIntegrator_d:
+{
+   module_type: Integrator
+   chan_tag: "sumch"
+   bsWF_tag: "sumch"
+}
+
+master_d:
+{
+   module_type: MasterBuilder
+   eventInfo_tag: "converter"
+   chan_tag: "converter"
+   baseline_tag: "baseline"
+   roi_tag: "roi"
+   sumch_tag: "sumch"
+}
+
+
+
+
+END_PROLOG

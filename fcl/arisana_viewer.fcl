@@ -1,7 +1,7 @@
 #include "arisana_common.fcl"
 #include "arisana_messageFacility.fcl"
 
-process_name: reco
+process_name: view
 
 source:
 {
@@ -13,7 +13,6 @@ source:
 
 services:
 {
-   TFileService: { fileName: "arisana.root" }
    DBInterface: @local::DBInterface_d
    message: @local::mf_default
    scheduler: @local::scheduler_default
@@ -41,7 +40,6 @@ physics:
    
    analyzers:
    {
-      arisana: { module_type: TreeWriter   eventData_tag: "master" }
       viewer:
       {
          module_type: EventViewer
@@ -64,10 +62,9 @@ physics:
       converter,
       baseline, integrator, roi,
       sumch, sumchIntegrator,
-      master
+      master, viewerInputs
    ]
-   a0: [ arisana ]
-   #a0: [ viewer ]
+   a0: [ viewer ]
    
    trigger_paths: [ p0 ]
    end_paths: [ a0 ]

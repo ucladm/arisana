@@ -74,10 +74,11 @@ private:
   art::InputTag _integralSUM_tag;
 
   bool _draw_physical;
+  bool _draw_sumch;
 
   arisana::RootGraphics gr;//graphics handler. Starts a graphics loop when initialized.
   TCanvas can;
-  //TCanvas sum_canvas;
+  TCanvas sum_can;
 
   void DrawProcessed(TMultiGraph* mg,
                      arisana::Channel const& chan,
@@ -98,12 +99,13 @@ arisana::EventViewer::EventViewer(fhicl::ParameterSet const & p)
   , _rawSUM_tag(p.get<std::string>("rawSUM_tag"))
   , _integralSUM_tag(p.get<std::string>("integralSUM_tag"))
   , _draw_physical(p.get<bool>("draw_physical"))
+  , _draw_sumch(p.get<bool>("draw_sumch"))
   , gr()
   , can("viewcanvas","",0,0,1800,900)
-    //, sum_canvas("sum_channel_canvas", "", 50, 50, 1000, 500)
+  , sum_can("sum_channel_canvas", "", 50, 50, 1000, 500)
 {
   ((TRootCanvas*)can.GetCanvasImp ())->DontCallClose();//disables closing the window until the module ends.
-  //((TRootCanvas*)sum_canvas.GetCanvasImp ())->DontCallClose();
+  ((TRootCanvas*)sum_can.GetCanvasImp ())->DontCallClose();
   gr.Start();//Begins actually processing graphics information. Before this point, graphics commands are saved for later, not processed.
 }
 
@@ -135,9 +137,14 @@ void arisana::EventViewer::DrawProcessed(TMultiGraph* mg,
   baseline_gr->SetMarkerColor(kRed);
   mg->Add(baseline_gr);
 
-  mg->Draw("ALP");
   // Draw integral
-  
+
+
+  mg->Draw("ALP");
+  mg->GetXaxis()->SetTitle("sample time [#mus]");
+  mg->GetYaxis()->SetTitle("amplitude [counts]");
+  mg->GetXaxis()->SetTitleSize(0.04);
+  mg->GetYaxis()->SetTitleSize(0.04);
 }
 
 
@@ -222,21 +229,47 @@ void arisana::EventViewer::analyze(art::Event const & e)
     /////////////////     PLOT SUM CHANNEL      ///////////////////////
     ///////////////////////////////////////////////////////////////////
 
+    if (_draw_sumch) {
     
-    /*
-    // Get the sum channel "raw" WF
-    art::Handle<vector<arisana::ChannelWF> > rawSUMsHandle;
-    e.getByLabel(_rawSUM_tag, rawSUMsHandle);
-    vector<arisana::ChannelWF> const& rawSUMs(*rawSUMsHandle);
+      // Get the sum channel "raw" WF
+      art::Handle<vector<arisana::ChannelWF> > rawSUMsHandle;
+      e.getByLabel(_rawSUM_tag, rawSUMsHandle);
+      vector<arisana::ChannelWF> const& rawSUMs(*rawSUMsHandle);
 
-    // Get the sum channel integral WF
-    art::Handle<vector<arisana::ChannelWF> > integralSUMsHandle;
-    e.getByLabel(_integralSUM_tag, integralSUMsHandle);
-    vector<arisana::ChannelWF> const& integralSUMs(*integralSUMsHandle);
-    */
+      // Get the sum channel integral WF
+      art::Handle<vector<arisana::ChannelWF> > integralSUMsHandle;
+      e.getByLabel(_integralSUM_tag, integralSUMsHandle);
+      vector<arisana::ChannelWF> const& integralSUMs(*integralSUMsHandle);
+
+
+      // Format the canvas
+      sum_can.cd();
+      sum_can.Clear();
+      std::ostringstream canvas_title;
+      canvas_title << "Run "<<eventData.info.run_id<<" Event "<<eventData.info.event_id<<" SUM";
+      sum_can.SetTitle(canvas_title.str().c_str());
+
+      // The various waveforms to draw will be added to this TMultiGraph
+      TMultiGraph* mg = new TMultiGraph();
+      std::ostringstream pad_name;
+      pad_name << "r"<<eventData.info.run_id<<"e"<<eventData.info.event_id<<"chSUM";
+      mg->SetName(pad_name.str().c_str());
+      mg->SetTitle(pad_name.str().c_str());
+
+      gPad->SetName(pad_name.str().c_str());
+      gStyle->SetTitleSize(1);
+
+      // Format and draw everything
+      DrawProcessed(mg, eventData.sumch[0], rawSUMs[0], rawSUMs[0]); //, integralWFs[ch]);
+        
+      sum_can.Update();
+    }
+    else //!_draw_sumch
+      sum_can.Close();
+    
   } //lock guard is deleted
 
-    //////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////
   //////////////     Decide what to do next       //////////////////
   //////////////////////////////////////////////////////////////////
   
