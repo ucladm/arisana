@@ -40,6 +40,11 @@ template class art::Wrapper<arisana::Channel>;
 template class std::vector<arisana::Channel>;
 template class art::Wrapper<std::vector<arisana::Channel> >;
 
+template class art::Wrapper<arisana::Channel::PMT>;
+template class std::vector<arisana::Channel::PMT>;
+template class art::Wrapper<std::vector<arisana::Channel::PMT> >;
+
+
 template class art::Wrapper<arisana::ChannelWF>;
 template class std::vector<arisana::ChannelWF>;
 template class art::Wrapper<std::vector<arisana::ChannelWF> >;

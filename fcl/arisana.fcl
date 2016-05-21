@@ -55,7 +55,7 @@ physics:
             fixedBaselineParams:
             {
                start_time: -999 #[us] will be truncated to start of waveform
-               end_time: 0
+               end_time: -10
                max_sigma: 10 #arbitrary number for now
             }
          }#params
@@ -89,7 +89,7 @@ physics:
 
       sumchIntegrator:
       {
-         moduel_type: Integrator
+         module_type: Integrator
          chan_tag: "sumch"
          bsWF_tag: "sumch"
       }
@@ -101,13 +101,27 @@ physics:
          chan_tag: "converter"
          baseline_tag: "baseline"
          roi_tag: "roi"
+         sumch_tag: "sumch"
       }
       
    }#producers
 
-   analyzers
+   analyzers:
    {
       arisana: { module_type: TreeWriter   eventData_tag: "master" }
+      viewer:
+      {
+         module_type: EventViewer
+         eventData_tag: "master"
+         rawWF_tag: "converter"
+         bsWF_tag: "baseline"
+         integralWF_tag: "integrator"
+         rawSUM_tag: "sumch"
+         integralSUM_tag: "sumchIntegrator"
+         
+
+         draw_physical: true
+      }
    }
 
    p0:
@@ -117,7 +131,8 @@ physics:
       sumch, sumchIntegrator,
       master
    ]
-   a0: [ arisana ]
+   #a0: [ arisana ]
+   a0: [ viewer ]
    
    trigger_paths: [ p0 ]
    end_paths: [ a0 ]

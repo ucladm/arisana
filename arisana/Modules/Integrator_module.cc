@@ -76,21 +76,21 @@ void arisana::Integrator::produce(art::Event & e)
   // Make our products, which begin empty
   unique_ptr<vector<arisana::ChannelWF> > integralWFs(new vector<arisana::ChannelWF>);
 
-  for (size_t i=0; i<chans.size(); ++i) {
-    arisana::Channel const& ch = chans[i];
-    arisana::ChannelWF const& bsWF = bsWFs[i];
+  for (size_t ch=0; ch<chans.size(); ++ch) {
+    arisana::Channel const& chan = chans[ch];
+    arisana::ChannelWF const& bsWF = bsWFs[ch];
 
     // Build integral waveform
     // Notice that this algorithm is slightly different from DS50!
     // The indexing here is such that when we want to do integral from
     // A to B, we can do integral[B] - integral[A] and result in sum of [A,B).
     // (DS50 does integral[B] - integral[A] = sum of (A,B]
-    
+
     arisana::ChannelWF integralWF;
-    integralWF.channel_id = ch.channel_id;
-    integralWF.waveform.resize(ch.nsamps);
+    integralWF.channel_id = chan.channel_id;
+    integralWF.waveform.resize(chan.nsamps);
     integralWF.waveform[0] = 0;
-    for (int i = 1; i<ch.nsamps; ++i) 
+    for (int i = 1; i<chan.nsamps; ++i) 
       integralWF.waveform[i] = integralWF.waveform[i-1]+bsWF.waveform[i-1];
 
     integralWFs->push_back(std::move(integralWF));

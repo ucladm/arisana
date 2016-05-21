@@ -32,7 +32,8 @@ namespace arisana
       nchannels(0),
       channels(),
       baselines(),
-      rois()
+      rois(),
+      sumch()
       //pulses()
     {}
 
@@ -42,6 +43,7 @@ namespace arisana
     std::vector<arisana::Channel> channels;
     std::vector<arisana::BaselineData> baselines;
     std::vector<arisana::ROI> rois;
+    std::vector<arisana::Channel> sumch;
     //std::vector<arisana::Pulse> pulses;
 
     void clear();
@@ -57,6 +59,7 @@ inline void arisana::EventData::clear()
   channels.clear();
   baselines.clear();
   rois.clear();
+  sumch.clear();
 }
 
 

@@ -81,7 +81,7 @@ void arisana::BaselineFinder::produce(art::Event & e)
   
 
   // Make our products, which begin empty
-  unique_ptr<vector<arisana::BaselineData> > baselineData(new vector<arisana::BaselineData>);
+  unique_ptr<vector<arisana::BaselineData> > baselineDatas(new vector<arisana::BaselineData>);
   unique_ptr<vector<arisana::ChannelWF> > bsWFs(new vector<arisana::ChannelWF>);
 
   // Call the actual baseline finder algorithm for each channel
@@ -93,11 +93,14 @@ void arisana::BaselineFinder::produce(art::Event & e)
     arisana::BaselineData baselineData;
 
     _helper.evalBaselineSubtractedWF(ch, rawWF, bsWF, baselineData);
+
+    baselineDatas->push_back(std::move(baselineData));
+    bsWFs->push_back(std::move(bsWF));
   }
   
 
   // Put the completed data products into the art::Event
-  e.put(std::move(baselineData));
+  e.put(std::move(baselineDatas));
   e.put(std::move(bsWFs));
   
 }

@@ -57,6 +57,7 @@ private:
   art::InputTag _chan_tag;
   art::InputTag _baseline_tag;
   art::InputTag _roi_tag;
+  art::InputTag _sumch_tag;
   
   int _counter;
 };
@@ -67,6 +68,7 @@ arisana::MasterBuilder::MasterBuilder(fhicl::ParameterSet const & p)
   , _chan_tag(p.get<std::string>("chan_tag"))
   , _baseline_tag(p.get<std::string>("baseline_tag"))
   , _roi_tag(p.get<std::string>("roi_tag"))
+  , _sumch_tag(p.get<std::string>("sumch_tag"))
   , _counter(-1)
 {
   produces<arisana::EventData>();
@@ -103,12 +105,18 @@ void arisana::MasterBuilder::produce(art::Event & e)
   e.getByLabel(_roi_tag, roisHandle);
   vector<arisana::ROI> const& rois(*roisHandle);
 
+  // Get the sum channel
+  art::Handle<vector<arisana::Channel> > sumchHandle;
+  e.getByLabel(_sumch_tag, sumchHandle);
+  vector<arisana::Channel> const& sumch(*sumchHandle);
+
 
   eventData->info = std::move(eventInfo);
   eventData->nchannels = channels.size();
   eventData->channels = std::move(channels);
   eventData->baselines = std::move(baselines);
   eventData->rois = std::move(rois);
+  eventData->sumch = std::move(sumch);
   
   
   // put the completed data product in the art::Event

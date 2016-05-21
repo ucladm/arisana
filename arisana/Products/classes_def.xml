@@ -41,6 +41,11 @@ debugging situations.
   <class name="std::vector<arisana::Channel>"/>
   <class name="art::Wrapper<std::vector<arisana::Channel> >"/>
 
+  <class name="arisana::Channel::PMT"/>
+  <class name="art::Wrapper<arisana::Channel::PMT>"/>
+  <class name="std::vector<arisana::Channel::PMT>"/>
+  <class name="art::Wrapper<std::vector<arisana::Channel::PMT> >"/>
+
   
   <class name="arisana::ChannelWF"/>
   <class name="art::Wrapper<arisana::ChannelWF>"/>
