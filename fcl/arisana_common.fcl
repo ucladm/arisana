@@ -25,7 +25,7 @@ converter_d:
    #v1495_tag: "daq:V1495"
    v1720_tag: "daq:V1720"
    v1495_tag: "daq:V1495"
-   max_nchannels: 8
+   max_nchannels: 16
 }#converter
 
 baseline_d:

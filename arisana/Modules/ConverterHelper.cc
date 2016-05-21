@@ -32,10 +32,14 @@ arisana::ConverterHelper::convertFragments(artdaq::Fragments const& frags,
                                            std::vector<arisana::Channel> & channels,
                                            std::vector<arisana::ChannelWF> & raw_wfs)
 {
+  int board_counter = -1;
+  
   for (auto const& frag : frags) {
 
     // Use the overlay to allow us to read channels
     ds50::V172xFragment overlay(frag);
+    
+    board_counter += 1;
 
     // Loop over all channels in the fragment 
     for (size_t ch_num=0; ch_num<overlay.enabled_channels(); ++ch_num) {
@@ -46,6 +50,7 @@ arisana::ConverterHelper::convertFragments(artdaq::Fragments const& frags,
       // Define channel_id
       int board_size = overlay.enabled_channels();
       int board_id = overlay.board_id();
+      if (!board_id) board_id = board_counter;
       int board_ch = ch_num;
       int channel_id = board_size*board_id + board_ch;
 
